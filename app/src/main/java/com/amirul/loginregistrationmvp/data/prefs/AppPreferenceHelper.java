@@ -2,8 +2,10 @@ package com.amirul.loginregistrationmvp.data.prefs;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.util.Log;
 
 public class AppPreferenceHelper implements PreferencesHelper {
+    private static final String TAG = "AppPreferenceHelper";
 
     private Context mContext;
     private final SharedPreferences prefs;
@@ -38,6 +40,7 @@ public class AppPreferenceHelper implements PreferencesHelper {
 
     @Override
     public void setUserName(String userName) {
+        Log.d(TAG, "setUserName: "+userName);
 
         prefs.edit().putString(PREF_KEY_USER_NAME, userName).apply();
 
@@ -45,16 +48,20 @@ public class AppPreferenceHelper implements PreferencesHelper {
 
     @Override
     public String getUserEmail() {
-        return null;
+        Log.d(TAG, "getUserEmail: ");
+        return prefs.getString(PREF_KEY_USER_EMAIL,"");
     }
 
     @Override
     public void setUserEmail(String userEmail) {
+        Log.d(TAG, "setUserEmail: "+userEmail);
 
+        prefs.edit().putString(PREF_KEY_USER_EMAIL,userEmail).apply();
     }
 
     @Override
     public String getUserPass() {
+        Log.d(TAG, "getUserPass: ");
         return prefs.getString(PREF_KEY_USER_PASS, "");
     }
 

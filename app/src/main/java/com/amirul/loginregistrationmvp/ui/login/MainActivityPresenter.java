@@ -1,10 +1,13 @@
 package com.amirul.loginregistrationmvp.ui.login;
 
 import android.content.Context;
+import android.util.Log;
+import android.widget.Toast;
 
 import com.amirul.loginregistrationmvp.data.AppDataManager;
 
-public class MainActivityPresenter implements MainActivityMvpPresenter{
+public class MainActivityPresenter implements MainActivityMvpPresenter {
+    private static final String TAG = "MainActivityPresenter";
 
 
     private Context mContext;
@@ -20,23 +23,21 @@ public class MainActivityPresenter implements MainActivityMvpPresenter{
     @Override
     public void onLoginSumbitClicked(String email, String pass) {
 
+        Log.d(TAG, "onLoginSumbitClicked: "+appDataManager.getUserEmail());
 
-        if (email.isEmpty() || email == null){
+
+        if (email.isEmpty() || email == null) {
             activityView.showEmailError("Email cann't be empty");
 
-        }else if (pass.isEmpty() || pass == null){
+        } else if (pass.isEmpty() || pass == null) {
             activityView.showPassError("Password can't be empty");
-        }else {
+        }else if (appDataManager.getUserEmail()== null || appDataManager.getUserPass()== null){
+            activityView.showToastMed("Please RegistrationActivity Firt");
 
-            if (appDataManager.getUserEmail().equals(email) && appDataManager.getUserPass().equals(pass)){
-
-                activityView.showToastMed("Logged In succesfully");
-
-            }else {
-                activityView.showToastMed("UserName and Pass doesNot matched");
-            }
-
+        }else if (appDataManager.getUserEmail().equals(email) && appDataManager.getUserPass().equals(pass)){
+            activityView.showToastMed("Welcome "+appDataManager.getUserName());
+        }else if (!appDataManager.getUserEmail().equals(email) || !appDataManager.getUserPass().equals(pass)){
+            activityView.showToastMed("Email and pass does not matched ");
         }
-
     }
 }
